@@ -10,7 +10,7 @@ public protocol ITenttsAPI {
     
 }
 
-public struct TenttsAPI {
+public struct TenttsAPI: ITenttsAPI {
     
     private let session = URLSession.shared
     
@@ -91,6 +91,11 @@ public struct TenttsAPI {
             throw APIServiceError.httpStatusCodeFailed(statusCode: statusCode, error: error)
         }
         return resp.data ?? []
+    }
+    
+    public func fetchQuotesRawData(symbols: String) async throws -> (Data, URLResponse) {
+        guard let url = urlForFetchQuotes(symbols: symbols) else { throw APIServiceError.invalidURL }
+        return try await session.data(from: url)
     }
     
     private func urlForFetchQuotes(symbols: String) -> URL? {

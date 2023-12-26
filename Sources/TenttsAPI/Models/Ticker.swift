@@ -8,16 +8,17 @@
 import Foundation
 
 public struct SearchTickersResponse: Decodable {
-    public let data: [Ticker]?
-    public let error: ErrorResponse?
     
+    public let error: ErrorResponse?
+    public let data: [Ticker]?
     
     enum CodingKeys: CodingKey {
+        case count
         case quotes
         case finance
     }
     
-    enum FinanceKeys : CodingKey {
+    enum FinanceKeys: CodingKey {
         case error
     }
     
@@ -30,21 +31,21 @@ public struct SearchTickersResponse: Decodable {
 }
 
 public struct Ticker: Codable, Identifiable, Hashable, Equatable {
-    
     public let id = UUID()
-    public let symbol: String?
+    
+    public let symbol: String
     public let quoteType: String?
-    public let shortName: String?
-    public let longName: String?
+    public let shortname: String?
+    public let longname: String?
     public let sector: String?
     public let industry: String?
-    public let exchDisp:String?
+    public let exchDisp: String?
     
-    public init(symbol: String?, quoteType: String?, shortName: String?, longName: String?, sector: String?, industry: String?, exchDisp: String?) {
+    public init(symbol: String, quoteType: String? = nil, shortname: String? = nil, longname: String? = nil, sector: String? = nil, industry: String? = nil, exchDisp: String? = nil) {
         self.symbol = symbol
         self.quoteType = quoteType
-        self.shortName = shortName
-        self.longName = longName
+        self.shortname = shortname
+        self.longname = longname
         self.sector = sector
         self.industry = industry
         self.exchDisp = exchDisp
